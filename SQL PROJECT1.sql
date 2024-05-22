@@ -1,82 +1,58 @@
-/* HOW TO CREATE A DATABASE */
-CREATE DATABASE sqlPROJECT;
-/*
- HOW TO ALTER A DATABASE
-IF READ ONLY IS = 0 CHANGES CAN BE DONE
-BUT IF READ ONLY = 1 CHANGES CANNOT BE EASILY DONE
- */
-ALTER DATABASE sqlproject READ ONLY = 0;
-/*
-HOW TO  CREATE TABLES REMEMBER TO PUT THE VARIABLE TYPES AND THE NUMBER OF 
-CHARACTERS ESPECIALLY IN VARCHAR
-This table contains the columns which are id,first_name,last_name,email_adress
- */
+/* ENSURES ALL VALUES IN A COLUMN ARE ALL DIFFERENT */
+CREATE TABLE certificate(
+					graduant_cert INT,
+                    cert_name VARCHAR(20) UNIQUE,-- with the unique constraint the products name cannot be the same
+                    price decimal (4, 2)
+                    );
+/* if you forget the unique constraint */
+ALTER table certificate
+ADD constraint
+UNIQUE (product_name);
+SELECT * FROM certificate;
+/* INSERT THE VALUES IN THE TABLE */
+INSERT INTO certificate
+		values(1, "first", 3.99),
+				(2, "second", 4.20),
+                (3, "third", 5.29);
+SELECT * FROM certificate; 
+/* NOT NULL CONSTRAINT */
+CREATE TABLE certificate (
+		graduant_cert INT,
+        cert_name varchar(20),
+        price decimal (4, 2) NOT NULL);
+SELECT * FROM CERTIFICATE;
+ALTER TABLE certificate -- it makes changes in the table 
+MODIFY price DECIMAL(4,2) NOT NULL;
+SELECT * FROM certificate;
+INSERT INTO certificate -- to insert something in the table since you insert a new one since we used the unique constraint 
+VALUES (4,"fourth", 0.00);
+select * from certificate;
+/* CHECK CONSTRAINT */
+/* IT CAN BE USED TO LIMIT WHAT VALUES ARE IN A COLUMN */
 CREATE TABLE graduants(
-graduants_id INT, -- INTEGER AND PUT A COMMA AT THE END STATEMENT
-first_name VARCHAR (20), -- VARIABLECHARACTER WITH 20 CHARACTERS
-last_name VARCHAR (20),
-course_studied VARCHAR (20),
-graduation_date date -- NO COMMA OR SEMICOLON AT THE LAST STATEMENT
-);
-SELECT * FROM graduants;
-RENAME TABLE employees to graduants; -- IT RENAMES THE TABLE
-SELECT * FROM graduants; -- *SHOWS INCLUSIVE OF EVERYTHING
-ALTER TABLE graduants -- TO CHANGE SOMETHING IN THE TABLE NO COMMA OR SEMICOLON AT END STATEMENT
-ADD level_of_education VARCHAR (20);
+		course_studied varchar(20),
+        last_name varchar(20),
+        first_name varchar(20),
+        level_of_education varchar (20),
+        email_adress varchar(200),
+        CONSTRAINT pay_check check(hourly_pay <=10)
+        );
 SELECT * FROM graduants;
 ALTER TABLE graduants
-DROP COLUMN graduation_date; -- IT DROPS THE COLUMN graduation_name
+ADD hourly_pay decimal(2,5);
+SELECT * FROM graduants;
+/* TO A TABLE THAT ALREADY EXISTS */
 ALTER TABLE graduants
-RENAME COLUMN graduants_id TO email_adress; -- IT RENAMES THE COLUMN graduants_id TO email_adress
-SELECT * FROM graduants;
+ADD CONSTRAIT pay_check check (hourly_pay <=10);
+select * from graduants;
+/* to a table that does not exist */
+/* TO DELETE A CHEQUE THAT HAS BEEN ADDED */
 ALTER TABLE graduants
-MODIFY COLUMN email_adress VARCHAR (200); -- WHEN MODIFY SOMETHING ON THE COLUMN ENSURE YOU PUT THE VARIABLE TYPE
-SELECT * FROM graduants;
-ALTER TABLE graduants
-MODIFY COLUMN course_studied VARCHAR(20)
-first;
-SELECT * FROM graduants;
-ALTER TABLE graduants
-MODIFY COLUMN last_name VARCHAR(20)
-AFTER email_adress; -- IT PUTS THE last_name after email_adress
-SELECT * FROM graduants;
-ALTER TABLE graduants
-DROP COLUMN email_adress;
-SELECT * FROM graduants;
-ALTER TABLE graduants
-ADD COLUMN email_adress VARCHAR(200); -- ADDS THE COLUMN email_adress
-SELECT * FROM graduants;
-/* remember to always start with select * from then put enter then the information */
-INSERT INTO graduants -- TO INSERT THE DATA IN THE COLUMNS as per the table named
-VALUES ("ENGINEERING","MAX","ALEX","MASTERS","max1@gmail.com"); -- remember how to name the characters eg varchar is always in quotes
-SELECT * FROM graduants;
-/* HOW TO INSRT MULTIPLE VALUES IN A TABLE */
-INSERT INTO graduants
-VALUES ("SOFTWARE ENG","NKATHA","PATIENCE","DEGREE","n1@gmail.com"), -- after every end statement is a comma
-		("FINANCE","KANANA","MAUREEN","DEGREE","m1@gmail.com"),
-        ("DATA ANALYST","NATALIE","PRINCE","CERTIFICATE","n4@gmail.com"); -- remember after the last end statement here is a semicolon
-SELECT * FROM graduants;
-/* THE email_adress column will be NULL with the prson with the following specifications */
-INSERT INTO graduants (course_studied,last_name,first_name,level_of_education)
-VALUES ("CIVIL ENG","KENDI","ANN","DIPLOMA");
-SELECT * FROM graduants;
-/* TO SELECT SPECIFIC INFORMATION */
-SELECT email_adress, course_studied
-FROM graduants; 
-SELECT *
-FROM graduants
-WHERE course_studied = "SOFTWARE ENG"; -- select specific information use WHERE CLAUSE 
-SELECT *
-FROM graduants
-/* != IS THE OPERATOR THAT SHOWS THAT IT IS NOT EQUAL TO */
-WHERE level_of_education != "MASTERS"; -- hence this one will show graduants with the level of education that is not masters
-SELECT *
-FROM graduants
-/* TO FIND WHERE SPECIFIC INFORMATION IS NULL USE THE is NULL using = will lead to an error*/
-WHERE email_adress IS NULL; -- it shows the column where email adress is NULL
-/*BELOW IS HOW TO UPDATE OR DELETE DATA FROM A TABLE*/
-UPDATE graduants 
-SET email_adress = "a1@gmail.com", -- sets email adress of ANN
-	level_of_education = NULL -- sets the level of educati to be NULL HENCE USE OF = NULL
-WHERE first_name = "ANN";
-SELECT * FROM graduants;
+drop pay_check;
+select * from graduants;
+
+        
+
+
+			
+
