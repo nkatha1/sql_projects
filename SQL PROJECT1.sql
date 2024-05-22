@@ -46,7 +46,7 @@ ALTER TABLE graduants
 ADD CONSTRAIT pay_check check (hourly_pay <=10);
 select * from graduants;
 /* to a table that does not exist */
-/* TO DELETE A CHEQUE THAT HAS BEEN ADDED */
+/* TO DELETE A CHEck THAT HAS BEEN ADDED */
 ALTER TABLE graduants
 drop pay_check;
 select * from graduants;
