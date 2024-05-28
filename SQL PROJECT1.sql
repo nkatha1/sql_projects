@@ -1,58 +1,66 @@
-/* ENSURES ALL VALUES IN A COLUMN ARE ALL DIFFERENT */
-CREATE TABLE certificate(
-					graduant_cert INT,
-                    cert_name VARCHAR(20) UNIQUE,-- with the unique constraint the products name cannot be the same
-                    price decimal (4, 2)
+select * from employee;
+/* autocommit,commit,rollback*/
+delete from employee;
+select * from employee;
+rollback; -- it restores the rows when they are deleted
+select * from employee;
+set autocommit = off;
+commit; -- restores the columns 
+select * from employee;
+
+/* getting current date and time */
+create table work(
+					my_date DATE,
+                    my_time TIME,
+                    my_datetime DATETIME
                     );
-/* if you forget the unique constraint */
-ALTER table certificate
-ADD constraint
-UNIQUE (product_name);
-SELECT * FROM certificate;
-/* INSERT THE VALUES IN THE TABLE */
-INSERT INTO certificate
-		values(1, "first", 3.99),
-				(2, "second", 4.20),
-                (3, "third", 5.29);
-SELECT * FROM certificate; 
-/* NOT NULL CONSTRAINT */
-CREATE TABLE certificate (
-		graduant_cert INT,
-        cert_name varchar(20),
-        price decimal (4, 2) NOT NULL);
-SELECT * FROM CERTIFICATE;
-ALTER TABLE certificate -- it makes changes in the table 
-MODIFY price DECIMAL(4,2) NOT NULL;
-SELECT * FROM certificate;
-INSERT INTO certificate -- to insert something in the table since you insert a new one since we used the unique constraint 
-VALUES (4,"fourth", 0.00);
-select * from certificate;
+select * from work;
+insert into work
+	values(current_date(),
+			current_time(),
+			now());
+select * from work;
+insert into work 
+	values(current_date()+1,
+			null,null);
+select * from work;
+
+/*unique constraint */
+create table stationary(
+						stationary_id INT,
+                        stationary_name VARCHAR (20) unique,
+                        stationary_purchasedate date
+);
+select * from stationary;
+alter table stationary
+add price decimal(4,2);
+select * from stationary;
+insert into stationary 
+			values(1,"pens","2023-02-02",20.22),
+					(2,"pencil","2024-03-05",20.43),
+                    (3,"pens","2024-08-02",20.50);
+select * from stationary; 
+/* not null constraint*/
+create table PRODUCTS (
+							stationary_id INT,
+                            stationary_name varchar(10),
+                            stationary_price decimal(3,2) NOT NULL
+                            );
+SELECT * FROM PRODUCTS;
+INSERT INTO products
+			values(1,"covers", 2.02);
+SELECT * FROM PRODUCTS;
 /* CHECK CONSTRAINT */
-/* IT CAN BE USED TO LIMIT WHAT VALUES ARE IN A COLUMN */
-CREATE TABLE graduants(
-		course_studied varchar(20),
-        last_name varchar(20),
-        first_name varchar(20),
-        level_of_education varchar (20),
-        email_adress varchar(200),
-        CONSTRAINT pay_check check(hourly_pay <=10)
-        );
-SELECT * FROM graduants;
-ALTER TABLE graduants
-ADD hourly_pay decimal(2,5);
-SELECT * FROM graduants;
-/* TO A TABLE THAT ALREADY EXISTS */
-ALTER TABLE graduants
-ADD CONSTRAIT pay_check check (hourly_pay <=10);
-select * from graduants;
-/* to a table that does not exist */
-/* TO DELETE A CHEck THAT HAS BEEN ADDED */
-ALTER TABLE graduants
-drop pay_check;
-select * from graduants;
-
-        
-
-
-			
+/*it is used to limit what values can be placed in a column*/
+select * from employee;
+/*check constraint to a table that alredy exists*/
+ALTER TABLE employee
+ADD CONSTRAINT chk_hourly_pay CHECK(hourly_pay >= 10.00);
+SELECT * FROM EMPLOYEE;
+INSERT INTO employee
+values(6,"js","ax","2024-05-12",5.00); -- under hourly pay of 10.00
+/* to delete a check*/
+ALTER TABLE employee
+DROP CHECK chk_hourly_pay;
+SELECT * FROM employee; 
 
